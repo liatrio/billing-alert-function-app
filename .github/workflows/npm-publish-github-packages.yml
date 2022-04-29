@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      version_number: ${{ steps.version_number.outputs.version_num }}
+      version_number: ${{ steps.version_number.outputs.version_number }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,9 +27,7 @@ jobs:
           npm test
       - name: grab version
         id: version_number
-        run: |
-          version_num=`jq -r .version package.json`
-          echo "::set-output name=version_number::$version_num"
+        run: echo "::set-output name=version_number::$(jq -r .version package.json)"
 
   create_release:
     needs: build
