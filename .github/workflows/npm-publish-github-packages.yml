@@ -44,7 +44,7 @@ jobs:
       - name: run npm 
         run: |
           npm ci
-          zip -r ${{ github.event.repository.name }}.zip . -x "./*"
+          zip -r ${{ github.event.repository.name }}.zip ./*
 
       - name: create release
         id: create_release
