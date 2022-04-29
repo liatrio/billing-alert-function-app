@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      version_number: ${{ steps.version_number.outputs.version_number }}
+      version_number: ${{ steps.version_number.outputs.version_num }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,7 +27,7 @@ jobs:
           npm test
       - name: grab version
         id: version_number
-        run: echo "::set-output name=version_number::$(jq -r .version package.json)"
+        run: echo "::set-output name=version_num::$(jq -r .version package.json)"
 
   create_release:
     needs: build
@@ -50,7 +50,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.version.outputs.version_number }}
-          release_name: ${{ steps.version.outputs.version_number }}
+          tag_name: ${{ needs.build.outputs.version_number }}
+          release_name: ${{ needs.build.outputs.version_number }}
           draft: false
           prerelease: true
