@@ -28,7 +28,7 @@ jobs:
       - name: grab version
         id: version_number
         run: |
-          version_num=jq -r .version package.json
+          version_num=`jq -r .version package.json`
           echo "::set-output name=version_number::$version_num"
 
   create_release:
