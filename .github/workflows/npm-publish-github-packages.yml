@@ -4,8 +4,8 @@
 name: Node.js Package
 
 on:
-  release:
-    types: [created]
+  push: 
+    branches: ["main"] 
   workflow_dispatch:
     
 
@@ -24,21 +24,27 @@ jobs:
           npm ci
           npm test
 
-  publish-gpr:
-    needs: build
+  create_release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
+
+      - name: run npm 
+        run: |
+          npm ci
+
+      - name: create release
+        uses: actions/create-release@v1
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_nam: Release ${{ github.ref }}
+          draft: true
+          prerelease: true
