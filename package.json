@@ -1,6 +1,10 @@
 {
-  "name": "slack-alert-function-app",
-  "version": "1.0.0",
+  "name": "billing-alert-function-app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liatrio/billing-alert-function-app.git"
+  },
+  "version": "v0.1.1",
   "description": "",
   "scripts": {
     "start": "func start",
