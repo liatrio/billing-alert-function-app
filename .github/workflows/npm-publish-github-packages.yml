@@ -44,8 +44,10 @@ jobs:
       - name: run npm 
         run: |
           npm ci
+          zip -r ${{ github.event.repository.name }}.zip . -x "./*"
 
       - name: create release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -54,3 +56,13 @@ jobs:
           release_name: ${{ needs.build.outputs.version_number }}
           draft: false
           prerelease: true
+
+      - name: upload release artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ github.event.repository.name }}.zip
+          asset_name: ${{ github.event.repository.name }}.zip
+          asset_content_type: application/zip
