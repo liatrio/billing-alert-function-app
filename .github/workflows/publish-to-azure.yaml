@@ -1,0 +1,33 @@
+
+name: Deploy to Azure storage blob
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to Azure
+        uses: Azure/login@v1.4.4
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: npm install and zip code
+        run: |
+          npm ci
+          zip -r ${{ github.event.repository.name }}.zip ./*
+
+      - name: Upload to Azure
+        run: |
+          az storage blob upload -f ./billing-alert-function-app.zip \
+          -c slack-alert-function-releases \
+          -n billing-alert-function-blob \
+          --account-name stbillingalertfunc \
+          --overwrite
