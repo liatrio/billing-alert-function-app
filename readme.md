@@ -7,12 +7,20 @@ This repo was created alongside Liatrio's [Cloud Adoption Framework (CAF) for Az
 
 ### Usage
 
-1. Fork repo so that you can create GitHub Action secrets
-2. Find the storage account with our function app inside.
-    - In the Liatrio CAF, the name is defaulted to `billingalertfunc`
-3. Click containers
-4. Find and click the container with your blob 
-    - In the Liatrio CAF, the name is `billing-alert-function-releases`
-5. Create a shared access token
-6. Create repo secret named SAS\_TOKEN with the token you just made
-7. Run a workflow dispatch on the **publish-to-azure.yaml** GitHub Action
+- Fork repo so that you can create GitHub Action secrets
+- Create a shared-access-token through your cli
+
+```bash
+sas=`az storage blob generate-sas \
+	--account-name <account-name> \
+	--container-name <container-name> \
+ 	--name <blob-name> \
+ 	--permissions rw \
+ 	--https-only \
+ 	--expiry <expiry-time> \ # ex:2022-05-01T00:00:00Z
+ 	-o tsv`
+echo $sas
+```
+- Create repo secret named SAS\_TOKEN with the token you just made
+- Create repo secrets for BLOB, CONTAINER, and ACCOUNT_NAME that match the ones used in the above command
+- Run the workflow dispatch on the **publish-to-azure.yaml** GitHub Action to upload the function code to your blob storage
