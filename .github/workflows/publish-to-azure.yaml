@@ -22,7 +22,7 @@ jobs:
         run: |
           az storage blob upload -f ./billing-alert-function-app.zip \
           --sas-token "${{ secrets.SAS_TOKEN }}" \
-          -c billing-alert-function-releases \
-          -n billing-alert-function-blob \
-          --account-name stbillingalertfunc \
+          -c ${{ secrets.CONTAINER }} \
+          -n ${{ secrets.BLOB }} \
+          --account-name ${{ secrets.ACCOUNT_NAME }} \
           --overwrite
