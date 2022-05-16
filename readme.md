@@ -11,13 +11,13 @@ This repo was created alongside Liatrio's [Cloud Adoption Framework (CAF) for Az
 - Create a shared-access-token through your cli
 
 ```bash
-sas=`az storage blob generate-sas \
-	--account-name <account-name> \
-	--container-name <container-name> \
- 	--name <blob-name> \
+sas=`az storage blob generate-sas \ 
+	--account-name <account-name> \ # ex: stillingalertfunc
+	--container-name <container-name> \ # ex: stc-billing-alert-func-dev-centralus
+ 	--name <blob-name> \ # ex: stb-billing-alert-func-dev-centralus
  	--permissions rw \
  	--https-only \
- 	--expiry <expiry-time> \ # ex:2022-05-01T00:00:00Z
+ 	--expiry <expiry-time> \ # ex: 2022-05-01T00:00:00Z
  	-o tsv`
 echo $sas
 ```
