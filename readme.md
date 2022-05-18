@@ -14,10 +14,10 @@ This repo was created alongside Liatrio's [Cloud Adoption Framework (CAF) for Az
 sas=`az storage blob generate-sas \ 
 	--account-name <account-name> \
 	# ex: stbillingalertfunc \ 
-	--container-name <container-name> \ 
-	# ex: stc-billing-alert-func-dev-centralus \
- 	--name <blob-name> \ 
-	# ex: stb-billing-alert-func-dev-centralus \
+	--container-name <container> \ 
+	# ex: stc-billing-alert-func-core-centralus \
+ 	--name <blob> \ 
+	# ex: stb-billing-alert-func-core-centralus \
  	--permissions rw \
  	--https-only \
  	--expiry <expiry-time> \ 
