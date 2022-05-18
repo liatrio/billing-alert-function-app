@@ -13,7 +13,7 @@ This repo was created alongside Liatrio's [Cloud Adoption Framework (CAF) for Az
 ```bash
 sas=`az storage blob generate-sas \ 
 	--account-name <account-name> \
-	# ex: stillingalertfunc \ 
+	# ex: stbillingalertfunc \ 
 	--container-name <container-name> \ 
 	# ex: stc-billing-alert-func-dev-centralus \
  	--name <blob-name> \ 
